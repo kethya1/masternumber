@@ -23,10 +23,11 @@ L'utilisateur a droit à plusieurs essais pour découvrir la bonne combinaison.
 
 
 
-- Choix de la **difficulté** (nombre de chiffres, nombre d'essais, etc.)
+- Choix de la **difficulté** (nombre de chiffres à deviner entre 4 et 6)
 - Utilisation **exclusivement de chiffres** pour la combinaison secrète
 - Retour d'indices après chaque tentative, avec les symboles :
   - **X** : chiffre correct **et bien placé**
   - **O** : chiffre correct **mais mal placé**
 - Affichage clair et simple en **ligne de commande**
-- Version améliorée : le code a évolué depuis la première version pour le rendre plus propre et plus fonctionnel, tout en conservant l’esprit de la version originale
+
+  NOTE : Le code a évolué depuis la première version pour le rendre plus propre et plus fonctionnel, tout en conservant l’esprit de la version originale.
