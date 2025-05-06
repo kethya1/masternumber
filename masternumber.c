@@ -12,46 +12,81 @@
 void genererCodeSecret(int codeSecret[], int tailleCode);
 void Indices(int codeSecret[], int proposition[], char indications[], int tailleCode);
 int niveauJeu();
-int quitterJeu();
+void jouer(int difficulte);
+void quitterJeu();
 int lireProposition(int proposition[], int tailleCode);
 
 int main(void) {
     system("cls"); // Effacer l'écran au début du jeu
+    unsigned int choix = 0;
+    int difficulte = 4; // Valeur par défaut de la difficulté
 
-    // Afficher le titre en ASCII
+    do {
+        printf("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+\n");
+        printf("|                     MASTERNUMBER                          |\n");
+        printf("|+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+|\n");  
+        printf("|                                                           |\n");  
+        printf("|   1. Jouer                                                |\n");
+        printf("|   2. Changer la difficult%c (actuelle : %d chiffres)        |\n", 130, difficulte);
+        printf("|   3. Quitter                                              |\n");
+        printf("|                                                           |\n");
+        printf("+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+\n");
+        printf("Votre choix : ");
 
+        do {
+           
+            if (scanf("%u", &choix) != 1) { // Vérifie si la saisie est invalide
+            printf("Entrée invalide. Veuillez entrer un nombre.\n");
+            while (getchar() != '\n'); // Vide le tampon d'entrée
+            choix = 0; // Réinitialise le choix pour éviter un comportement inattendu
+            }
+        } while (choix == 0);
 
-    
+        switch (choix) {
+            case 1:
+                jouer(difficulte); // Passe la difficulté actuelle à la fonction jouer
+                break;
 
-    if (quitterJeu() == 1) {
-        printf("Vous avez choisi de quitter le jeu. Au revoir !\n");
-        return 0;
-    }
+            case 2:
+                difficulte = niveauJeu(); // Met à jour la difficulté
+                break;
 
-    int difficulte = niveauJeu();
+            case 3:
+                quitterJeu();
+                break;
+
+            default:
+                printf("Mauvais choix. Veuillez réessayer.\n");
+                break;
+        }
+    } while (choix != 3);
+
+    return 0;
+}
+
+void jouer(int difficulte) {
     int codeSecret[difficulte];
     int essaisRestants;
     int proposition[difficulte];
     char indications[difficulte];
+    int i; // Déclaration de la variable i à l'extérieur des boucles
 
     genererCodeSecret(codeSecret, difficulte);
 
-
-
-    printf("Bienvenue dans le Mastermind %c chiffres !\n",133);
-    printf("Devinez le code secret %c %d chiffres, les chiffres vont de %d %c %d.\n", 133, difficulte, VALEURMIN,133, VALEURMAX);
-    printf("Le 'X' indique qu'un chiffre est bien placé, le 'O' indique qu'un chiffre est correct mais mal placé.\n\n");
+    system("cls");
+    printf("Devinez le code secret %c %d chiffres, les chiffres vont de %d %c %d.\n", 133, difficulte, VALEURMIN, 133, VALEURMAX);
+    printf("Le 'X' indique qu'un chiffre est bien pla%c, le 'O' indique qu'un chiffre est correct mais mal plac%c.\n\n", 130, 130);
 
     for (essaisRestants = ESSAISMAX; essaisRestants > 0; --essaisRestants) {
         printf("Essais restants : %d\n", essaisRestants);
 
         if (!lireProposition(proposition, difficulte)) {
-            printf("Entree invalide. %d chiffres sont attendus.\n",difficulte);
+            printf("Rappel: %d chiffres sont attendus.\n", difficulte);
             ++essaisRestants; // Ne pas pénaliser pour une entrée invalide
             continue;
         }
 
-        for (int i = 0; i < difficulte; ++i) {
+        for (i = 0; i < difficulte; ++i) { // Initialisation de i dans la boucle
             indications[i] = '_';
         }
 
@@ -59,12 +94,12 @@ int main(void) {
 
         printf(" +===============+\n");
         printf(" | ");
-        for (int i = 0; i < difficulte; ++i) {
+        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
             printf("%d ", proposition[i]);
         }
 
         printf("    | ");
-        for (int i = 0; i < difficulte; ++i) {
+        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
             if (indications[i] == 'X') {
                 couleur_texte(VERT); // Vert pour 'X'
             } else if (indications[i] == 'O') {
@@ -79,7 +114,7 @@ int main(void) {
         printf(" +===============+\n");
 
         int victoire = 1;
-        for (int i = 0; i < difficulte; ++i) {
+        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
             if (indications[i] != 'X') {
                 victoire = 0;
                 break;
@@ -88,21 +123,23 @@ int main(void) {
 
         if (victoire) {
             printf("\nGG ! Le code secret était bien : ");
-            for (int i = 0; i < difficulte; ++i) {
+            for (i = 0; i < difficulte; ++i) { // Réutilisation de i
                 printf("%d ", codeSecret[i]);
             }
             printf("\n");
-            return 0;
+            return;
         }
     }
 
     printf("Nombre d'essais atteint ;-( Le code secret était : ");
-    for (int i = 0; i < difficulte; ++i) {
+    for (i = 0; i < difficulte; ++i) { // Réutilisation de i
         printf("%d ", codeSecret[i]);
     }
     printf("\n");
+}
 
-    return 0;
+void quitterJeu() {
+    printf("Vous avez choisi de quitter le jeu. Au revoir !\n");
 }
 
 void genererCodeSecret(int codeSecret[], int tailleCode) {
@@ -115,10 +152,16 @@ void genererCodeSecret(int codeSecret[], int tailleCode) {
 void Indices(int codeSecret[], int proposition[], char indications[], int tailleCode) {
     int marqueCode[tailleCode];
     int marqueProp[tailleCode];
-    memset(marqueCode, 0, sizeof(marqueCode));
-    memset(marqueProp, 0, sizeof(marqueProp));
+    int i;
 
-    for (int i = 0; i < tailleCode; ++i) {
+    // Initialisation des tabs à 0 
+    for (i = 0; i < tailleCode; ++i) {
+        marqueCode[i] = 0;
+        marqueProp[i] = 0;
+    }
+
+    // Vérification des chiffres bien placés
+    for (i = 0; i < tailleCode; ++i) {
         if (proposition[i] == codeSecret[i]) {
             indications[i] = 'X';
             marqueCode[i] = 1;
@@ -126,7 +169,8 @@ void Indices(int codeSecret[], int proposition[], char indications[], int taille
         }
     }
 
-    for (int i = 0; i < tailleCode; ++i) {
+    // Vérification des chiffres corrects mais mal placés
+    for (i = 0; i < tailleCode; ++i) {
         if (marqueProp[i]) continue;
         for (int j = 0; j < tailleCode; ++j) {
             if (!marqueCode[j] && proposition[i] == codeSecret[j]) {
@@ -153,19 +197,6 @@ int niveauJeu() {
     return difficulte;
 }
 
-int quitterJeu() {
-    int choix;
-    do {
-        printf("Tapez 0 pour jouer au jeu, 1 pour le quitter : ");
-        if (scanf("%d", &choix) != 1) {
-            while (getchar() != '\n'); // Vider le buffer
-            choix = -1;
-        }
-    } while (choix < 0 || choix > 1);
-
-    return choix;
-}
-
 int lireProposition(int proposition[], int tailleCode) {
     char buffer[100];
     if (!fgets(buffer, sizeof(buffer), stdin)) {
@@ -188,3 +219,4 @@ int lireProposition(int proposition[], int tailleCode) {
 
     return 1;
 }
+
