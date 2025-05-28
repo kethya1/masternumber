@@ -9,6 +9,7 @@
 #define VALEURMAX 6
 #define ESSAISMAX 10
 
+//prototypes
 void genererCodeSecret(int codeSecret[], int tailleCode);
 void Indices(int codeSecret[], int proposition[], char indications[], int tailleCode);
 int niveauJeu();
