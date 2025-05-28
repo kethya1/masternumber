@@ -37,8 +37,8 @@ int main(void) {
            
             if (scanf("%u", &choix) != 1) { // Vérifie si la saisie est invalide
             printf("Entrée invalide. Veuillez entrer un nombre.\n");
-            while (getchar() != '\n'); // Vide le tampon d'entrée
-            choix = 0; // Réinitialise le choix pour éviter un comportement inattendu
+            while (getchar() != '\n'); 
+            choix = 0; 
             }
         } while (choix == 0);
 
@@ -69,7 +69,7 @@ void jouer(int difficulte) {
     int essaisRestants;
     int proposition[difficulte];
     char indications[difficulte];
-    int i; // Déclaration de la variable i à l'extérieur des boucles
+    int i; 
 
     genererCodeSecret(codeSecret, difficulte);
 
@@ -86,7 +86,7 @@ void jouer(int difficulte) {
             continue;
         }
 
-        for (i = 0; i < difficulte; ++i) { // Initialisation de i dans la boucle
+        for (i = 0; i < difficulte; ++i) { 
             indications[i] = '_';
         }
 
@@ -94,12 +94,12 @@ void jouer(int difficulte) {
 
         printf(" +===============+\n");
         printf(" | ");
-        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
+        for (i = 0; i < difficulte; ++i) { 
             printf("%d ", proposition[i]);
         }
 
         printf("    | ");
-        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
+        for (i = 0; i < difficulte; ++i) { 
             if (indications[i] == 'X') {
                 couleur_texte(VERT); // Vert pour 'X'
             } else if (indications[i] == 'O') {
@@ -109,12 +109,12 @@ void jouer(int difficulte) {
             }
             printf("%c ", indications[i]);
         }
-        couleur_texte(BLANC); // Réinitialiser la couleur par défaut
+        couleur_texte(BLANC); 
         printf("|\n");
         printf(" +===============+\n");
 
         int victoire = 1;
-        for (i = 0; i < difficulte; ++i) { // Réutilisation de i
+        for (i = 0; i < difficulte; ++i) { 
             if (indications[i] != 'X') {
                 victoire = 0;
                 break;
@@ -123,7 +123,7 @@ void jouer(int difficulte) {
 
         if (victoire) {
             printf("\nGG ! Le code secret était bien : ");
-            for (i = 0; i < difficulte; ++i) { // Réutilisation de i
+            for (i = 0; i < difficulte; ++i) { 
                 printf("%d ", codeSecret[i]);
             }
             printf("\n");
@@ -132,7 +132,7 @@ void jouer(int difficulte) {
     }
 
     printf("Nombre d'essais atteint ;-( Le code secret était : ");
-    for (i = 0; i < difficulte; ++i) { // Réutilisation de i
+    for (i = 0; i < difficulte; ++i) {
         printf("%d ", codeSecret[i]);
     }
     printf("\n");
@@ -187,10 +187,10 @@ int niveauJeu() {
     do {
         printf("Envie de plus de difficulté ? Choisissez 4, 5, ou 6 chiffres à deviner : ");
         if (scanf("%d", &difficulte) != 1) {
-            while (getchar() != '\n'); // Vider le buffer
+            while (getchar() != '\n'); 
             difficulte = 0;
         } else {
-            while (getchar() != '\n'); // Vider le buffer après une saisie valide
+            while (getchar() != '\n');
         }
     } while (difficulte < 4 || difficulte > 6);
 
@@ -219,4 +219,5 @@ int lireProposition(int proposition[], int tailleCode) {
 
     return 1;
 }
+
 
